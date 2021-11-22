@@ -1,6 +1,6 @@
 :root {
   --clr-light: white;
-  --clr-neutral: gray;
+  --clr-neutral: #979797;
   --clr-purple: #2C264A;
   --clr-peach: #E18975;
   --clr-green: #39B54A;
@@ -16,11 +16,16 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-ul, li, p {
+div, ul, li, p {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 li {
@@ -177,6 +182,8 @@ nav ul.nav-menu li:last-child {
 }
 
 .card {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -193,8 +200,22 @@ nav ul.nav-menu li:last-child {
   background-size: cover;
   border-radius: 5px;
   overflow: hidden;
-  -webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
-          box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+          box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  -webkit-transition: -webkit-transform .2s ease;
+  transition: -webkit-transform .2s ease;
+  transition: transform .2s ease;
+  transition: transform .2s ease, -webkit-transform .2s ease;
+  position: relative;
+}
+
+.card:hover {
+  /*outline: 1px solid var(--clr-purple);*/
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  -webkit-box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
 }
 
 .card .card-title {
@@ -239,6 +260,7 @@ nav ul.nav-menu li:last-child {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-weight: 600;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -249,31 +271,211 @@ nav ul.nav-menu li:last-child {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-weight: 600;
 }
 
 .card-tasks li {
-  width: 19px;
-  height: 19px;
+  width: 1.188rem;
+  height: 1.188rem;
   background-color: var(--clr-light);
   border: 1px solid var(--clr-neutral);
   color: var(--clr-neutral);
   font-size: var(--fs-primary);
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.125rem;
   border-radius: 100%;
   margin-left: 3px;
 }
 
-.task {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--clr-light);
+.card-tasks .task-done {
+  background-color: var(--clr-green);
+  border-color: var(--clr-green);
+  color: var(--clr-light);
 }
 
-/************************************************
-****************** TabStyles ********************
-*************************************************/
+.card-tasks .task-inprogress {
+  border-color: var(--clr-green);
+  color: var(--clr-green);
+}
+
+/**************************************************/
+/**************   Progress Bar   ******************/
+/**************************************************/
+.time-overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  z-index: 1;
+  -webkit-backdrop-filter: blur(2px);
+          backdrop-filter: blur(2px);
+}
+
+.progress-bar {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+  border: 7px solid var(--clr-purple);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.progress-pie-chart {
+  --pb-size: 100px;
+  width: var(--pb-size);
+  height: var(--pb-size);
+  border-radius: 50%;
+  background-color: #E5E5E5;
+  position: relative;
+}
+
+.progress-pie-chart.gt-50 {
+  background-color: #81CE97;
+}
+
+.ppc-progress {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - calc(var(--pb-size)/2));
+  top: calc(50% - calc(var(--pb-size)/2));
+  width: var(--pb-size);
+  height: var(--pb-size);
+  clip: rect(0, var(--pb-size), var(--pb-size), calc(var(--pb-size)/2));
+}
+
+.ppc-progress .ppc-progress-fill {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - calc(var(--pb-size)/2));
+  top: calc(50% - calc(var(--pb-size)/2));
+  width: var(--pb-size);
+  height: var(--pb-size);
+  clip: rect(0, calc(var(--pb-size)/2), var(--pb-size), 0);
+  background: #81CE97;
+  -webkit-transform: rotate(60deg);
+          transform: rotate(60deg);
+}
+
+.gt-50 .ppc-progress {
+  clip: rect(0, calc(var(--pb-size)/2), var(--pb-size), 0);
+}
+
+.gt-50 .ppc-progress .ppc-progress-fill {
+  clip: rect(0, calc(var(--pb-size)/2), var(--pb-size), calc(var(--pb-size)/2));
+  background: #E5E5E5;
+}
+
+.ppc-percents {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: calc(50% - 75px/2);
+  top: calc(50% - 75px/2);
+  width: 75px;
+  height: 75px;
+  background: #fff;
+  text-align: center;
+  display: table;
+}
+
+.ppc-percents span {
+  display: block;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--clr-purple);
+}
+
+.pcc-percents-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/********************/
+.svg-abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.svg-rad-progress {
+  height: 80px;
+  width: 80px;
+  border-radius: 100%;
+}
+
+.svg-rad-progress {
+  -webkit-transform: translate(-50%, -50%) rotateZ(-90deg);
+          transform: translate(-50%, -50%) rotateZ(-90deg);
+}
+
+.svg-progress-background {
+  stroke: var(--clr-purple);
+  stroke-width: 4;
+  fill: none;
+}
+
+.svg-progress-bar {
+  stroke: var(--clr-green);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 220;
+  stroke-dashoffset: 54;
+  fill: none;
+  -webkit-animation: prgrss 15s infinite;
+          animation: prgrss 15s infinite;
+}
+
+@-webkit-keyframes prgrss {
+  from {
+    stroke-dashoffset: 220;
+  }
+  to {
+    stroke-dashoffset: 54;
+  }
+}
+
+@keyframes prgrss {
+  from {
+    stroke-dashoffset: 220;
+  }
+  to {
+    stroke-dashoffset: 54;
+  }
+}
+
+.svg-progress-label {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/*************************************************/
+/****************** TabStyles ********************/
+/*************************************************/
 label {
   cursor: pointer;
   -webkit-user-select: none;
