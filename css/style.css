@@ -55,7 +55,7 @@ nav {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  min-width: 190px;
+  min-width: 193px;
   height: 100vh;
   background-color: var(--clr-purple);
   padding: 2em 0;
@@ -142,6 +142,10 @@ nav ul.nav-menu li:last-child {
   height: 100vh;
 }
 
+.content-area .lrgap {
+  padding: 0 2em;
+}
+
 .content-area:before {
   content: ' ';
   display: block;
@@ -152,7 +156,7 @@ nav ul.nav-menu li:last-child {
   width: 100%;
   height: 100%;
   opacity: 0.2;
-  background-image: url(/images/BG.jpg);
+  background-image: url(../images/BG.jpg);
   background-repeat: no-repeat;
   background-position: 50% 0;
   background-size: cover;
@@ -167,6 +171,7 @@ nav ul.nav-menu li:last-child {
   position: relative;
   width: 40rem;
   height: 40rem;
+  min-width: 34rem;
   padding: var(--gap);
   background-color: var(--clr-peach);
   border-radius: 13px;
@@ -196,8 +201,9 @@ nav ul.nav-menu li:last-child {
           justify-content: space-between;
   height: 100%;
   background-color: var(--clr-light);
-  background: url(/images/cardBg.png) no-repeat;
+  background: url(../images/cardBg.png) no-repeat;
   background-size: cover;
+  background-position: center;
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
@@ -313,6 +319,7 @@ nav ul.nav-menu li:last-child {
           justify-content: center;
   width: 100%;
   height: 100%;
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.5);
   position: absolute;
   z-index: 1;
@@ -540,11 +547,10 @@ label.nav {
 input[type="radio"]:checked + .page + label.nav {
   background: var(--clr-peach);
   color: #ffffff;
-  padding: 0 10px;
 }
 
 input[type="radio"]:checked + .page + label.nav span {
-  padding-left: 20px;
+  padding-left: 0px;
 }
 
 input[type="radio"]:checked + .page + label.nav svg {
@@ -553,7 +559,6 @@ input[type="radio"]:checked + .page + label.nav svg {
 
 label.nav span {
   padding-left: 0px;
-  position: relative;
 }
 
 label.nav svg {
@@ -721,8 +726,33 @@ input[type="radio"]:checked + .page .page-contents > * {
 /************************************************
 ****************** mediaQueries *****************
 *************************************************/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 880px) {
+  main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
   nav {
-    display: none;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    min-width: initial;
+    width: 100%;
+    height: initial;
+  }
+  nav .menu-title {
+    margin: 0;
+  }
+  nav ul.nav-menu {
+    max-width: 190px;
+    margin-left: auto;
+  }
+  .logo {
+    height: 80px;
+  }
+  .menu-title {
+    margin: 0;
   }
 }
