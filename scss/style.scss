@@ -119,6 +119,7 @@ nav {
 }
 
 .content-area {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,8 +127,8 @@ nav {
     position: relative;
     height: 100vh;
 
-    & .lrgap {
-        padding: 0 2em
+    &.lr-gap {
+        padding: 1em 2em
     }
 }
 
@@ -519,6 +520,8 @@ label{
 @media screen and (max-width: 880px) {
     main {
         flex-direction: column;
+        height: 100vh;
+        overflow-x: hidden;
     }
 
     nav {
@@ -534,7 +537,17 @@ label{
         & ul.nav-menu {
             max-width: 190px;
             margin-left: auto;
+
+            & li.active a::after {
+                left: -38px;
+                right: initial;
+                border-width: 22px 16px 22px 22px;
+                border-left-color: transparent;
+                border-right-color: var(--clr-peach);
+            }
         }
+
+        
     }
 
     .logo {
@@ -544,5 +557,9 @@ label{
     .menu-title {
         margin: 0
     }
-};
+
+    .content-area {
+        height: 100%;
+    }
+}
     
